@@ -1,164 +1,618 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <title>Resume - Deluxe Hove</title>
-  <link type="text/css" rel="stylesheet" href="stylesheet.css"/>
-		<title>Deluxe</title>
-		<link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond|Abel|Bungee+Hairline|Sacramento|Raleway|Slabo+27px" rel="stylesheet"><link rel="stylesheet" href="./css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deluxe Hove — Resume</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:      #0a0c0f;
+      --bg2:     #111418;
+      --bg3:     #181c22;
+      --border:  #1e2530;
+      --accent:  #00e5a0;
+      --acc2:    #00b07a;
+      --text:    #c9d1d9;
+      --hi:      #f0f6fc;
+      --lo:      #6e7681;
+      --hdr:     68px;
+      --gut:     clamp(1rem, 5vw, 3.5rem);
+    }
+    [data-theme="light"] {
+      --bg:      #f3f5f8;
+      --bg2:     #ffffff;
+      --bg3:     #edf0f4;
+      --border:  #d0d5dd;
+      --accent:  #007a58;
+      --acc2:    #005a40;
+      --text:    #2d3748;
+      --hi:      #1a202c;
+      --lo:      #9aa3b0;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: 15px; line-height: 1.72;
+      transition: background .3s, color .3s;
+    }
+    /* scanline */
+    body::before {
+      content: ''; pointer-events: none; position: fixed;
+      inset: 0; z-index: 9999;
+      background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,.022) 3px, rgba(0,0,0,.022) 4px);
+    }
+    [data-theme="light"] body::before { opacity: 0; }
 
+    /* ── HEADER ─────────── */
+    header {
+      position: fixed; top:0; left:0; right:0; height: var(--hdr);
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 var(--gut); z-index: 100; backdrop-filter: blur(12px);
+    }
+    .logo { font-family:'Space Mono',monospace; font-size:13px; color:var(--accent); letter-spacing:.04em; }
+    .logo .dim { color:var(--lo); }
+    .cursor { display:inline-block; width:2px; height:.88em; background:var(--accent); margin-left:3px; vertical-align:middle; animation:blink 1s step-end infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    nav { display:flex; gap:1.3rem; }
+    nav a { font-family:'Space Mono',monospace; font-size:10px; color:var(--lo); text-decoration:none; letter-spacing:.1em; text-transform:uppercase; transition:color .2s; }
+    nav a:hover { color:var(--accent); }
+    .h-right { display:flex; align-items:center; gap:.6rem; }
+    .btn { display:inline-flex; align-items:center; gap:.35rem; padding:.38rem .85rem; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.06em; border-radius:4px; cursor:pointer; transition:all .2s; text-decoration:none; border:none; white-space:nowrap; }
+    .ghost { background:transparent; border:1px solid var(--border); color:var(--lo); }
+    .ghost:hover { border-color:var(--accent); color:var(--accent); background:rgba(0,229,160,.05); }
+    .solid { background:var(--accent); color:#0a0c0f; font-weight:700; }
+    .solid:hover { background:var(--acc2); }
+    .theme-btn { background:transparent; border:1px solid var(--border); color:var(--lo); width:32px; height:32px; border-radius:4px; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:14px; transition:all .2s; }
+    .theme-btn:hover { border-color:var(--accent); color:var(--accent); }
+
+    /* ── LAYOUT ─────────── */
+    main { max-width:1060px; margin:0 auto; padding:calc(var(--hdr) + 2.8rem) var(--gut) 5rem; }
+
+    /* ── HERO ───────────── */
+    .hero { padding:3.5rem 0 2.8rem; border-bottom:1px solid var(--border); margin-bottom:3rem; }
+    .eyebrow { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin-bottom:1.1rem; }
+    .eyebrow::before { content:'> '; opacity:.45; }
+    .hero h1 { font-family:'Space Mono',monospace; font-size:clamp(2rem,5vw,3.5rem); font-weight:700; color:var(--hi); line-height:1.1; letter-spacing:-.02em; margin-bottom:.4rem; }
+    .hero-role { font-family:'Space Mono',monospace; font-size:clamp(.75rem,1.5vw,.92rem); color:var(--accent); margin-bottom:.3rem; letter-spacing:.03em; line-height:1.5; }
+    .hero-loc { font-family:'Space Mono',monospace; font-size:11px; color:var(--lo); margin-bottom:1.5rem; letter-spacing:.04em; }
+    .hero-bio { max-width:650px; color:var(--text); font-size:14.5px; line-height:1.84; margin-bottom:2rem; }
+    .cta { display:flex; gap:.7rem; flex-wrap:wrap; align-items:center; }
+    .cta-link { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.06em; color:var(--lo); text-decoration:none; transition:color .2s; }
+    .cta-link:hover { color:var(--accent); }
+
+    /* ── SECTION ────────── */
+    section { margin-bottom:3rem; opacity:0; transform:translateY(16px); transition:opacity .5s,transform .5s; }
+    section.in { opacity:1; transform:translateY(0); }
+    .slabel { font-family:'Space Mono',monospace; font-size:9.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); margin-bottom:1.35rem; display:flex; align-items:center; gap:.7rem; }
+    .slabel::after { content:''; flex:1; height:1px; background:var(--border); }
+
+    /* ── EXPERIENCE ─────── */
+    .exp { background:var(--bg2); border:1px solid var(--border); border-radius:6px; margin-bottom:.85rem; overflow:hidden; position:relative; transition:border-color .2s; }
+    .exp::before { content:''; position:absolute; left:0; top:0; bottom:0; width:2px; background:var(--border); transition:background .2s; }
+    .exp:hover { border-color:var(--accent); }
+    .exp:hover::before, .exp.open::before { background:var(--accent); }
+    .exp.open { border-color: rgba(0,229,160,.35); }
+    .exp-head { display:grid; grid-template-columns:1fr auto; gap:.2rem 1rem; padding:1.15rem 1.4rem .95rem; cursor:pointer; user-select:none; }
+    .exp-role { font-weight:600; color:var(--hi); font-size:14px; grid-column:1; }
+    .exp-org { font-family:'Space Mono',monospace; font-size:10.5px; color:var(--accent); grid-column:1; margin-top:.05rem; }
+    .exp-right { grid-column:2; grid-row:1/3; display:flex; flex-direction:column; align-items:flex-end; justify-content:center; gap:.35rem; }
+    .exp-date { font-family:'Space Mono',monospace; font-size:10px; color:var(--lo); white-space:nowrap; }
+    .chev { font-size:11px; color:var(--lo); transition:transform .25s; }
+    .exp.open .chev { transform:rotate(180deg); }
+    .exp-body { max-height:0; overflow:hidden; transition:max-height .38s ease; }
+    .exp.open .exp-body { max-height:1000px; }
+    .duties { list-style:none; border-top:1px solid var(--border); margin:0 1.4rem; padding:.9rem 0 1.2rem; }
+    .duties li { font-size:13px; color:var(--text); padding:.26rem 0; display:flex; gap:.55rem; align-items:baseline; }
+    .duties li::before { content:'▸'; color:var(--accent); font-size:9px; flex-shrink:0; }
+
+    /* ── CERTS ──────────── */
+    .cert-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(215px,1fr)); gap:.5rem; }
+    .cert { display:flex; align-items:center; gap:.5rem; padding:.52rem .8rem; background:var(--bg2); border:1px solid var(--border); border-radius:4px; font-family:'Space Mono',monospace; font-size:10px; color:var(--text); text-decoration:none; transition:all .2s; letter-spacing:.02em; line-height:1.45; }
+    .cert:hover { border-color:var(--accent); color:var(--accent); }
+    .cert::before { content:'✦'; color:var(--accent); font-size:7px; flex-shrink:0; }
+
+    /* ── SKILLS ─────────── */
+    .skill-row { display:grid; grid-template-columns:160px 1fr; gap:.65rem; padding:.78rem 0; border-bottom:1px solid var(--border); align-items:start; }
+    .skill-row:last-child { border-bottom:none; }
+    .scat { font-family:'Space Mono',monospace; font-size:9.5px; letter-spacing:.08em; color:var(--lo); text-transform:uppercase; padding-top:.15rem; }
+    .tags { display:flex; flex-wrap:wrap; gap:.3rem; }
+    .tag { padding:.17rem .52rem; background:var(--bg3); border:1px solid var(--border); border-radius:3px; font-family:'Space Mono',monospace; font-size:9.5px; color:var(--text); letter-spacing:.02em; }
+
+    /* ── CARDS ──────────── */
+    .card-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:.85rem; }
+    .card { padding:1.05rem 1.15rem; background:var(--bg2); border:1px solid var(--border); border-radius:6px; transition:border-color .2s, transform .2s; }
+    .card:hover { border-color:var(--accent); transform:translateY(-2px); }
+    .ctitle { font-family:'Space Mono',monospace; font-size:10.5px; font-weight:700; color:var(--accent); margin-bottom:.32rem; letter-spacing:.03em; }
+    .cbody { font-size:12.5px; color:var(--text); line-height:1.6; }
+
+    /* ── ACHIEVEMENTS ───── */
+    .ach { list-style:none; }
+    .ach li { padding:.52rem 0; border-bottom:1px solid var(--border); font-size:13.5px; color:var(--text); display:flex; gap:.55rem; align-items:baseline; }
+    .ach li:last-child { border-bottom:none; }
+    .ach li::before { content:'★'; color:var(--accent); font-size:10px; flex-shrink:0; }
+
+    /* ── REFEREES ───────── */
+    .ref-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:.85rem; }
+    .ref { padding:1.05rem 1.15rem; background:var(--bg2); border:1px solid var(--border); border-radius:6px; transition:border-color .2s; }
+    .ref:hover { border-color:var(--accent); }
+    .ref-name { font-weight:600; color:var(--hi); font-size:14px; margin-bottom:.1rem; }
+    .ref-title { font-size:12px; color:var(--lo); margin-bottom:.5rem; line-height:1.55; }
+    .ref-info { font-family:'Space Mono',monospace; font-size:10px; color:var(--lo); display:flex; flex-direction:column; gap:.18rem; }
+    .ref-info a { color:var(--accent); text-decoration:none; }
+    .ref-info a:hover { text-decoration:underline; }
+
+    /* ── CONTACT ────────── */
+    .contact-box { padding:1.8rem; background:var(--bg2); border:1px solid var(--border); border-radius:6px; }
+    .contact-box p { font-size:13.5px; color:var(--text); margin-bottom:1.1rem; }
+    .c-details { display:flex; flex-wrap:wrap; gap:1.1rem; margin-bottom:1.2rem; }
+    .c-item { font-family:'Space Mono',monospace; font-size:11px; color:var(--lo); display:flex; align-items:center; gap:.4rem; }
+    .c-item a { color:var(--accent); text-decoration:none; }
+    .c-item a:hover { text-decoration:underline; }
+    .socials { display:flex; gap:1rem; flex-wrap:wrap; }
+    .soc { font-family:'Space Mono',monospace; font-size:10.5px; color:var(--lo); text-decoration:none; display:inline-flex; align-items:center; gap:.35rem; transition:color .2s; }
+    .soc::before { content:'→'; }
+    .soc:hover { color:var(--accent); }
+
+    /* ── HOBBIES ────────── */
+    .hobbies { display:flex; flex-wrap:wrap; gap:.5rem; }
+    .hobby { padding:.28rem .75rem; background:var(--bg2); border:1px solid var(--border); border-radius:20px; font-size:12.5px; color:var(--text); }
+
+    /* ── FOOTER ─────────── */
+    footer { border-top:1px solid var(--border); margin-top:3.5rem; padding-top:1.6rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+    footer p { font-family:'Space Mono',monospace; font-size:9.5px; color:var(--lo); letter-spacing:.06em; }
+
+    /* ── RESPONSIVE ─────── */
+    @media (max-width:640px) {
+      nav { display:none; }
+      .skill-row { grid-template-columns:1fr; }
+      .scat { padding-bottom:.2rem; }
+    }
+
+    /* ── PRINT ──────────── */
+    @media print {
+      header, .cta, footer .btn, body::before { display:none !important; }
+      body { background:white; color:#111; font-size:12px; }
+      main { padding-top:1rem; }
+      section { opacity:1 !important; transform:none !important; }
+      .exp { border-color:#ddd; background:white; break-inside:avoid; }
+      .exp-body { max-height:none !important; }
+      .exp::before { display:none; }
+      .cert, .card, .ref, .contact-box { border-color:#ddd; background:white; }
+      a { color:inherit; }
+      .accent, .exp-org, .cert::before, .ach li::before { color:#007a58; }
+    }
+  </style>
 </head>
 <body>
-<!-- partial:index.partial.html -->
-<div id="header">
-  <br>
-  <h1>Resume</h1>
-  <h2>Deluxe Hove</h2>
-</div>
-<br><br>
-<div class="left"></div>
-<div class="stuff">
-  <br><br>
-  <h1>Deluxe Hove</h1>
-  <hr />
-  <br>
-  <p class="head"><b>Summary</b></p>
-  <ul>
-    <li>Solutions oriented professional with over ten years contributing to organizational effectiveness and efficiency through vibrant ICT solutions in various business sectors.</li>
-  </ul>
-  <br>
 
-  <p class="head"><b>Education</b></p>
-  <ul>
-    <a href="http://www.nust.ac.zw">
-      <li>Master of Science in Information Systems</li>
-    </a>
-    <!--Link-->
-    <a href="https://www.uz.ac.zw/">
-      <li>Bachelor of Business Studies and Computing Science</li>
-    </a>
-    <a href="https://www.shawacademy.com/">
-      <li>Professional Diploma in Leadership & Management</li>
-    </a>
-    <a href="https://www.shawacademy.com/">
-      <li>Professional Diploma in Digital Marketing</li>
-    </a>
-    
-  </ul>
-  <br>
-  <p class="head"><b>Certifications</b></p>
-  <ul>
-    <a href="https://www.isc2.org/Certifications/CISSP">
-      <li>Certified Information Systems Security Professional (CISSP)</li>
-    </a>
-    <!--Link-->
-    <a href="https://www.eccouncil.org/programs/certified-ethical-hacker-ceh/">
-      <li>Certified Ethical Hacker (CEH)</li>
-    </a>
-    <a href="https://www.cisco.com/c/en/us/training-events/training-certifications/certifications/associate/cyberops-associate.html">
-      <li>CCNA Cyber Operations (CCNA CyberOps)</li>
-    </a>
-    <a href="https://www.shawacademy.com/">
-      <li>ITIL IT Service Management (ITIL)</li>
-    </a>
-    <a href="https://aws.amazon.com/certification/certified-solutions-architect-associate/">
-      <li>AWS Certified Solutions Architect - Associate (AWS CSAA)</li>
-    </a>
-    <a href="https://aws.amazon.com/certification/certified-sysops-admin-associate/">
-      <li>AWS Certified SysOps Administrator - Associate</li>
-    </a>
-    <a href="https://aws.amazon.com/certification/certified-security-specialty/">
-      <li>AWS Certified Security Specialty</li>
-    </a>
-    <a href="https://www.vmware.com/learning/certification/vcp-dcv.html">
-      <li>VMware Certified Professional 6 Data Center (VCP6 DCV)</li>
-    </a>
-    <a href="https://www.cisco.com/c/en/us/training-events/training-certifications/certifications/associate/ccna.html">
-      <li>Cisco Certified Network Associate (CCNA)</li>
-    </a>
-    <a href="https://e.huawei.com/en/talent/#/cert/product-details?certifiedProductId=603&authenticationLevel=CTYPE_CARE_HCIA&technicalField=IIC&version=4.0">
-      <li>Huawei Certified Network Associate (HCNA – R&S)</li>
-    </a>
-    <a href="https://e.huawei.com/en/talent/#/cert/product-details?certifiedProductId=603&authenticationLevel=CTYPE_CARE_HCIA&technicalField=IIC&version=4.0">
-      <li>Huawei Certified Network Associate (HCNA – Security)</li>
-    </a>
-    <a href="https://www.cyberoam.com/">
-      <li>Cyberoam Certified Network Security Professional (CCNSP))</li>
-    </a>
-    
-  </ul>
-  <br>
-  
-  <p class="head"><b>Experience</b></p>
-  <ul>
-    <li><b>Cloud Support Engineer II</b> : Amazon Web Services (August 2021 – Current) </li>
-    <li><b>Group IT Manager</b> : Zimplow Holdings (Sept 2020 – July 2021): </li>
-    <li><b>Systems Engineer</b> : Zimbabwe Energy Regulatory Authority (Dec 2015 – Aug 2020) </li>
-    <li><b>Senior ICT Officer</b> : Mbada Diamonds (Pvt) Ltd (July 2011 – November 2015) : </li>
-    <li><b>ICT Officer</b> : Mbada Diamonds (Pvt) Ltd (December 2010 – June 2011) </li>
-    <li><b>Broadband Customer Care Operator - Econet Wireless Zimbabwe (August 2010 - November 2010) </li>
-    <li><b>Internship</b> : Econet Wireless Zimbabwe (August 2008 - November 2009) </li>
-  </ul>
-  <br>
-  <p class="head"><b>Technical Skills Summary</b></p>
-  <ul>
-    <li><b>PLATFORMS & HARDWARE</b>	: AWS | VMWARE | CITRIX | HYPER-V | IBM | HP | CISCO | ORACLE</li>
-<li><b>SECURITY APPLIANCES</b>	: CISCO | SOPHOS | CYBEROAM | SNORT | CLEAROS | UNTANGLE</li> 
-<li><b>OPERATING SYSTEMS</b>	: WINDOWS | LINUX | UNIX | MACOS | CISCO IOS | ANDROID</li> 
-<li><b>NETWORKING</b>			: TCP/IP | IP ROUTING | SWITCHING | MPLS | WLAN | VPN | VOIP</li> 
-<li><b>LANGUAGES</b>			: JAVA | VB.NET | PYTHON | SAP ABAP | PHP</li> 
-<li><b>DATABASES</b>			: SYBASE | ORACLE | MSSQL | MySQL | MARIADB | MAXDB</li> 
-<li><b>APPLICATIONS</b>			: SAP | SAGE/PASTEL | MILESTONE VMS | VEEAM BACKUP</li> 
-<li><b>MANAGEMENT SYSTEMS</b>	: SOLMAN | SOLARWINDS | SPICEWORKS | MANAGEENGINE</li> 
-<li><b>OTHER</b>				: FREENAS | MS OFFICE | SHAREPOINT | MS EXCHANGE | MRTG</li> 
-<br>
-  </ul>
-</div>
-<div class="right">
-  <br><br><br><br>
-  <p class="head"><b>Social</b></p>
-  <ul>
-    <li>LinkedIn : <a href ="https://www.linkedin.com/in/deluxehove/"><b>deluxehove</b></a></li>
-    <li>Twitter : <a href ="https://www.twitter.com/deluxehv/"><b>deluxehv</b></a></li>
-    <li>Pager : <a href ="https://www.invenire.co.zw/contacts/"><b>deluxehove</b></a></li>
-  </ul>
-  <br>
-  <p class="head"><b>Awards</b></p>
-  <ul>
-    <li>CCNA 2014 EMEA NetRiders Competition Top Talent award</li>
-    <li>Cisco Global Scholarship Program - Cisco Cyber Ops </li>
-    <li>Others</li>
-  </ul>
-  <br>
-  <p class="head"><b>Interests</b></p>
-  <ul>
-    <li>Systems Design + Security</li>
-    <li>Hacking & Pentesting</li>
-    <li>Risk & Governance</li>
-    <li>Programming</li>
-    <li>Computer Science</li>
-  </ul>
-  <br>
-  <p class="head"><b>Projects</b></p>
-  <ul>
-    <li>Project 01</li>
-    <li>Project 02</li>
-    <li>Project 03</li>
-    <li>Project 04</li>
-    <li>Project 05</li>
-  </ul>
-  <br>
-  <p class="head"><b>Extracurriculars</b></p>
-  <ul>
-    <li>Reading technology literature</li>
-    <li>Playing / watching soccer</li>
-    <li>Playing Chess</li>
-  </ul>
-</div>
-<div id="footer">
-  <h2 id="name">Deluxe</h2>
-</div>
-<!-- partial -->
-  
+<header>
+  <div class="logo">dh<span class="dim">@resume</span>:~$<span class="cursor"></span></div>
+  <nav>
+    <a href="#experience">Experience</a>
+    <a href="#certifications">Certs</a>
+    <a href="#skills">Skills</a>
+    <a href="#education">Education</a>
+    <a href="#referees">Referees</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <div class="h-right">
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">☀</button>
+    <a class="btn ghost" href="mailto:deluxehove@gmail.com">Email</a>
+    <a class="btn solid" href="#" onclick="window.print();return false;">↓ PDF</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="eyebrow">Cloud · Security · Enterprise Advisory</div>
+    <h1>Deluxe Hove</h1>
+    <div class="hero-role">Technical Account Manager · Amazon Web Services · CISSP · CEH · AWS SA Professional</div>
+    <div class="hero-loc">📍 Cape Town, South Africa &nbsp;·&nbsp; +27 64 518 3612 &nbsp;·&nbsp; +263 77 216 6116</div>
+    <p class="hero-bio">
+      Solutions-oriented ICT professional with 15+ years contributing to organisational effectiveness across mining, energy regulation, and enterprise sectors. Key competencies include cloud strategy advisory, information security, systems integration, project management, ICT risk &amp; governance, and delivering value in highly pressurised environments. Currently serving enterprise customers at AWS as a Technical Account Manager.
+    </p>
+    <div class="cta">
+      <a class="btn solid" href="#" onclick="window.print();return false;">↓ Download PDF</a>
+      <a class="btn ghost" href="https://www.linkedin.com/in/deluxehove/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a class="cta-link" href="mailto:deluxehove@gmail.com">deluxehove@gmail.com</a>
+    </div>
+  </div>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="slabel">Work Experience</div>
+
+    <!-- TAM -->
+    <div class="exp open">
+      <div class="exp-head" onclick="this.parentElement.classList.toggle('open')">
+        <div class="exp-role">Technical Account Manager</div>
+        <div class="exp-right">
+          <span class="exp-date">Jan 2026 — Present</span>
+          <span class="chev">▾</span>
+        </div>
+        <div class="exp-org">Amazon Web Services · Enterprise Support</div>
+      </div>
+      <div class="exp-body">
+        <ul class="duties">
+          <li>Serve as trusted advisor to C-level executives on cloud strategy, conducting quarterly business reviews and strategic planning sessions.</li>
+          <li>Lead Well-Architected Reviews and design complex multi-service, multi-region architectures ensuring uptime for mission-critical systems.</li>
+          <li>Drive cost optimisation and performance improvements while accelerating adoption of AI/ML, analytics, and emerging technologies.</li>
+          <li>Proactively resolve technical challenges and mentor customer teams to ensure strong satisfaction scores across enterprise accounts.</li>
+          <li>Assist with AWS consumption growth through strategic account planning and measurable business value delivery.</li>
+          <li>Guide complex cloud migrations and modernisation projects with expertise in industry-specific compliance and security requirements.</li>
+          <li>Maintain AWS Solutions Architect Professional certification with deep technical leadership in enterprise customer engagement and solution design.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Cloud Support Engineer II -->
+    <div class="exp">
+      <div class="exp-head" onclick="this.parentElement.classList.toggle('open')">
+        <div class="exp-role">Cloud Support Engineer II</div>
+        <div class="exp-right">
+          <span class="exp-date">Aug 2021 — Dec 2025</span>
+          <span class="chev">▾</span>
+        </div>
+        <div class="exp-org">Amazon Web Services</div>
+      </div>
+      <div class="exp-body">
+        <ul class="duties">
+          <li>Provided technical support to customers globally across AWS services.</li>
+          <li>Worked with Security, Identity and Protection services in AWS.</li>
+          <li>Assisted Solutions Architects &amp; Technical Account Managers (TAMs) with customer engagements.</li>
+          <li>Troubleshot complex customer issues involving replication and distributed systems.</li>
+          <li>Drove service improvement initiatives &amp; deep-dived service technical issues within Global Support Operations.</li>
+          <li>Conducted hiring and talent development — phone &amp; on-site interviews.</li>
+          <li>Up-skilled and mentored junior engineers within the team.</li>
+          <li>Created technical content — public &amp; internal articles including video walkthroughs.</li>
+          <li>Delivered service-specific training within Premium Support teams.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Zimplow -->
+    <div class="exp">
+      <div class="exp-head" onclick="this.parentElement.classList.toggle('open')">
+        <div class="exp-role">Group IT Manager</div>
+        <div class="exp-right">
+          <span class="exp-date">Sep 2020 — Jul 2021</span>
+          <span class="chev">▾</span>
+        </div>
+        <div class="exp-org">Zimplow Holdings</div>
+      </div>
+      <div class="exp-body">
+        <ul class="duties">
+          <li>Ensured alignment of Group ICT to overall business objectives through effective ICT strategy and standards.</li>
+          <li>Provided leadership on research, design, and implementation of information systems across the Group.</li>
+          <li>Azure and on-premise data center infrastructure design, setup, provisioning, and maintenance.</li>
+          <li>Managed information security and ICT business continuity through effective BCP/DRP systems.</li>
+          <li>Evaluated current systems for effectiveness and scalability, making strategic recommendations.</li>
+          <li>Led end-user capability building on system capabilities, security measures, and daily operations.</li>
+          <li>Oversaw handling of technical support — diagnosis, resolution, and communication of resolutions.</li>
+          <li>Hands-on involvement during acquisition, implementation, and testing phases of ICT projects.</li>
+          <li>Managed effective engagements with all ICT service providers in the best interest of the Group.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ZERA -->
+    <div class="exp">
+      <div class="exp-head" onclick="this.parentElement.classList.toggle('open')">
+        <div class="exp-role">Systems Engineer</div>
+        <div class="exp-right">
+          <span class="exp-date">Dec 2015 — Aug 2020</span>
+          <span class="chev">▾</span>
+        </div>
+        <div class="exp-org">Zimbabwe Energy Regulatory Authority (ZERA)</div>
+      </div>
+      <div class="exp-body">
+        <ul class="duties">
+          <li>Data center and infrastructure design, setup, provisioning, and maintenance.</li>
+          <li>Assisted in developing the organisation's IT strategy and standards for computer and network systems.</li>
+          <li>Responsible for adherence to data policies, procedures, SOPs, and quality control.</li>
+          <li>Installed and maintained security infrastructure systems in line with organisational policies.</li>
+          <li>Researched, designed, and implemented information systems and technology solutions for business needs.</li>
+          <li>Performed systems and database administrative duties and conducted system-wide infrastructure monitoring.</li>
+          <li>Led development strategy and code quality coordination, managing work items and fixes.</li>
+          <li>Handled technical support queries — diagnosis, resolution, and communication.</li>
+          <li>Evaluated and advised on system scalability and troubleshooting across all ICT project phases.</li>
+          <li>Provided end users with guidelines on system capabilities, security measures, and daily operations.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Mbada Senior -->
+    <div class="exp">
+      <div class="exp-head" onclick="this.parentElement.classList.toggle('open')">
+        <div class="exp-role">Senior ICT Officer</div>
+        <div class="exp-right">
+          <span class="exp-date">Jul 2011 — Nov 2015</span>
+          <span class="chev">▾</span>
+        </div>
+        <div class="exp-org">Mbada Diamonds (Pvt) Ltd</div>
+      </div>
+      <div class="exp-body">
+        <ul class="duties">
+          <li>Business needs analysis and technology solution design to address business problems.</li>
+          <li>Network planning, implementation, and support — LAN, WLAN, VLAN, VPN, and WAN.</li>
+          <li>Server infrastructure deployment and maintenance.</li>
+          <li>Microsoft Exchange Server mail administration and server virtualisation management.</li>
+          <li>Developed and implemented security measures protecting integrity and confidentiality of company information.</li>
+          <li>Implementation and maintenance of a fibre-optic IP surveillance (CCTV) core network.</li>
+          <li>Planning and configuration of IEEE 802.16 systems for IP network communication.</li>
+          <li>Video management software installation, camera setup &amp; provisioning, and comms link management.</li>
+          <li>Systems administration and maintenance of ERP systems — Sage Evolution and SAP.</li>
+          <li>Systems integration, development, maintenance, and database management.</li>
+          <li>Configured and maintained backup &amp; Disaster Recovery solutions.</li>
+          <li>Installation, calibration &amp; support of CONPASS personnel X-ray screening machine.</li>
+          <li>Stakeholder relationship management across business units.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Mbada ICT Officer -->
+    <div class="exp">
+      <div class="exp-head" onclick="this.parentElement.classList.toggle('open')">
+        <div class="exp-role">ICT Officer</div>
+        <div class="exp-right">
+          <span class="exp-date">Dec 2010 — Jun 2011</span>
+          <span class="chev">▾</span>
+        </div>
+        <div class="exp-org">Mbada Diamonds (Pvt) Ltd</div>
+      </div>
+      <div class="exp-body">
+        <ul class="duties">
+          <li>Managed LAN, WAN voice and data networks — access provisioning, equipment maintenance, and performance monitoring.</li>
+          <li>Oversaw planning, installation, support, and documentation of network systems.</li>
+          <li>Evaluated and recommended server hardware/software components and upgrades.</li>
+          <li>Installed, upgraded, and configured client accounts, network printing, directory structures, and rights.</li>
+          <li>Managed systems security and implemented preventative measures against security breaches.</li>
+          <li>Administration of the SAP ERP system.</li>
+          <li>Maintained the core VoIP network — server admin, billing, call flow config, SIP, CPE provisioning, and call routing.</li>
+          <li>User training on basic computer use and specified systems.</li>
+          <li>Administration and maintenance of CCTV and Biometric security systems.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Econet CCO -->
+    <div class="exp">
+      <div class="exp-head" onclick="this.parentElement.classList.toggle('open')">
+        <div class="exp-role">Broadband Customer Care Operator</div>
+        <div class="exp-right">
+          <span class="exp-date">Aug 2010 — Nov 2010</span>
+          <span class="chev">▾</span>
+        </div>
+        <div class="exp-org">Econet Wireless Zimbabwe</div>
+      </div>
+      <div class="exp-body">
+        <ul class="duties">
+          <li>Handled inbound customer queries and technical support calls.</li>
+          <li>Assisted customers in configuring mobile phones and PCs for Econet Broadband internet.</li>
+          <li>Liaised with departments to resolve queries within promised turnaround times.</li>
+          <li>Sales promotion, product education, and customer relationship building.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Econet Intern -->
+    <div class="exp">
+      <div class="exp-head" onclick="this.parentElement.classList.toggle('open')">
+        <div class="exp-role">ICT Intern</div>
+        <div class="exp-right">
+          <span class="exp-date">Aug 2008 — Nov 2009</span>
+          <span class="chev">▾</span>
+        </div>
+        <div class="exp-org">Econet Wireless Zimbabwe</div>
+      </div>
+      <div class="exp-body">
+        <ul class="duties">
+          <li>Installed, configured, and supported network infrastructure — switches, routers, mail and web servers for LAN/VLAN/VPN/WAN.</li>
+          <li>Configured routers for LAN, WAN wireless/cable connections, and VPN.</li>
+          <li>Linux server installation, configuration, network monitoring, and troubleshooting.</li>
+          <li>System administration on Unix, Solaris, and Linux for Internet, email, web hosting, DNS, and billing.</li>
+          <li>Customer fixed WiMAX provisioning — BreezeMax and Breeze Access SUs and profiling.</li>
+          <li>Configuration and implementation of Wi-Fi solutions for clients.</li>
+        </ul>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certifications">
+    <div class="slabel">Professional Certifications</div>
+    <div class="cert-grid">
+      <a class="cert" href="https://www.isc2.org/Certifications/CISSP" target="_blank" rel="noopener">CISSP — Certified Information Systems Security Professional</a>
+      <a class="cert" href="https://aws.amazon.com/certification/certified-solutions-architect-professional/" target="_blank" rel="noopener">AWS Solutions Architect – Professional</a>
+      <a class="cert" href="https://aws.amazon.com/certification/certified-security-specialty/" target="_blank" rel="noopener">AWS Certified Security Specialty</a>
+      <a class="cert" href="https://aws.amazon.com/certification/certified-solutions-architect-associate/" target="_blank" rel="noopener">AWS Solutions Architect – Associate</a>
+      <a class="cert" href="https://aws.amazon.com/certification/certified-sysops-admin-associate/" target="_blank" rel="noopener">AWS SysOps Administrator – Associate</a>
+      <a class="cert" href="https://www.eccouncil.org/programs/certified-ethical-hacker-ceh/" target="_blank" rel="noopener">CEH — Certified Ethical Hacker</a>
+      <a class="cert" href="https://www.vmware.com/learning/certification/vcp-dcv.html" target="_blank" rel="noopener">VCP6 DCV — VMware Certified Professional</a>
+      <a class="cert" href="https://www.shawacademy.com/" target="_blank" rel="noopener">ITIL — IT Service Management</a>
+      <a class="cert" href="https://www.cisco.com/c/en/us/training-events/training-certifications/certifications/associate/cyberops-associate.html" target="_blank" rel="noopener">CCNA CyberOps — Cisco Cyber Operations</a>
+      <a class="cert" href="https://www.cisco.com/c/en/us/training-events/training-certifications/certifications/associate/ccna.html" target="_blank" rel="noopener">CCNA — Cisco Certified Network Associate</a>
+      <a class="cert" href="https://e.huawei.com/en/talent/" target="_blank" rel="noopener">HCNA — Huawei Certified Network Associate (R&amp;S)</a>
+      <a class="cert" href="https://e.huawei.com/en/talent/" target="_blank" rel="noopener">HCNA — Huawei Certified Network Associate (Security)</a>
+      <a class="cert" href="https://www.cyberoam.com/" target="_blank" rel="noopener">CCNSP — Cyberoam Certified Network Security Professional</a>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="slabel">Technical Skills</div>
+    <div class="skill-row">
+      <div class="scat">Cloud &amp; Platforms</div>
+      <div class="tags"><span class="tag">AWS</span><span class="tag">Azure</span><span class="tag">VMware</span><span class="tag">Citrix</span><span class="tag">Hyper-V</span><span class="tag">IBM</span><span class="tag">Cisco</span><span class="tag">Oracle</span></div>
+    </div>
+    <div class="skill-row">
+      <div class="scat">Security</div>
+      <div class="tags"><span class="tag">Cisco</span><span class="tag">Sophos</span><span class="tag">Cyberoam</span><span class="tag">Snort</span><span class="tag">ClearOS</span><span class="tag">Untangle</span></div>
+    </div>
+    <div class="skill-row">
+      <div class="scat">Operating Systems</div>
+      <div class="tags"><span class="tag">Linux</span><span class="tag">Windows Server</span><span class="tag">UNIX</span><span class="tag">macOS</span><span class="tag">Cisco IOS</span><span class="tag">Android</span></div>
+    </div>
+    <div class="skill-row">
+      <div class="scat">Networking</div>
+      <div class="tags"><span class="tag">TCP/IP</span><span class="tag">IP Routing</span><span class="tag">Switching</span><span class="tag">MPLS</span><span class="tag">WLAN</span><span class="tag">VPN</span><span class="tag">VoIP</span></div>
+    </div>
+    <div class="skill-row">
+      <div class="scat">Languages</div>
+      <div class="tags"><span class="tag">Python</span><span class="tag">Java</span><span class="tag">VB.NET</span><span class="tag">SAP ABAP</span><span class="tag">PHP</span></div>
+    </div>
+    <div class="skill-row">
+      <div class="scat">Databases</div>
+      <div class="tags"><span class="tag">Oracle</span><span class="tag">MSSQL</span><span class="tag">MySQL</span><span class="tag">MariaDB</span><span class="tag">Sybase</span><span class="tag">MaxDB</span></div>
+    </div>
+    <div class="skill-row">
+      <div class="scat">Applications</div>
+      <div class="tags"><span class="tag">SAP ERP</span><span class="tag">Sage/Pastel</span><span class="tag">Milestone VMS</span><span class="tag">Veeam Backup</span><span class="tag">FreeNAS</span></div>
+    </div>
+    <div class="skill-row">
+      <div class="scat">Monitoring &amp; ITSM</div>
+      <div class="tags"><span class="tag">SolarWinds</span><span class="tag">SolMan</span><span class="tag">SpiceWorks</span><span class="tag">ManageEngine</span><span class="tag">MRTG</span></div>
+    </div>
+    <div class="skill-row">
+      <div class="scat">Collaboration</div>
+      <div class="tags"><span class="tag">SharePoint</span><span class="tag">MS Exchange</span><span class="tag">MS Office</span></div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="slabel">Academic Qualifications</div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="ctitle">M.Sc. Information Systems</div>
+        <div class="cbody">National University of Science &amp; Technology (NUST)<br>2019</div>
+      </div>
+      <div class="card">
+        <div class="ctitle">B.B.Sc. Business Studies &amp; Computing Science</div>
+        <div class="cbody">University of Zimbabwe (UZ)<br>2010</div>
+      </div>
+      <div class="card">
+        <div class="ctitle">Professional Diploma — Leadership &amp; Management</div>
+        <div class="cbody">Shaw Academy · 2019</div>
+      </div>
+      <div class="card">
+        <div class="ctitle">Professional Diploma — Digital Marketing</div>
+        <div class="cbody">Shaw Academy · 2019</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACHIEVEMENTS -->
+  <section id="achievements">
+    <div class="slabel">Achievements</div>
+    <ul class="ach">
+      <li>CCNA 2014 EMEA NetRiders Competition — Top Talent Award, finishing <strong style="color:var(--hi)">4th in the EMEA region</strong></li>
+      <li>Cisco Global Scholarship Program — awarded for Cisco Cyber Ops</li>
+    </ul>
+  </section>
+
+  <!-- HOBBIES -->
+  <section>
+    <div class="slabel">Hobbies &amp; Interests</div>
+    <div class="hobbies">
+      <span class="hobby">📖 Reading technology literature</span>
+      <span class="hobby">♟ Playing Chess</span>
+      <span class="hobby">⚽ Playing &amp; watching soccer</span>
+    </div>
+  </section>
+
+  <!-- REFEREES -->
+  <section id="referees">
+    <div class="slabel">Referees</div>
+    <div class="ref-grid">
+      <div class="ref">
+        <div class="ref-name">Alfred Nyamhunga</div>
+        <div class="ref-title">Managing Consultant<br>Headway Business Consulting</div>
+        <div class="ref-info">
+          <span>+263 77 295 1467</span>
+          <a href="mailto:alfnyamhunga@gmail.com">alfnyamhunga@gmail.com</a>
+        </div>
+      </div>
+      <div class="ref">
+        <div class="ref-name">Elton Chirinyu</div>
+        <div class="ref-title">IT Infrastructure &amp; Operations Manager<br>MBCA Bank</div>
+        <div class="ref-info">
+          <span>+263 77 236 6508</span>
+          <a href="mailto:eltonc@mbca.co.zw">eltonc@mbca.co.zw</a>
+        </div>
+      </div>
+      <div class="ref">
+        <div class="ref-name">Farai Mutyasera</div>
+        <div class="ref-title">General Manager — Enterprise Business<br>Econet Wireless Zimbabwe</div>
+        <div class="ref-info">
+          <span>+263 77 222 2332</span>
+          <a href="mailto:farai.mutyasera@econet.co.zw">farai.mutyasera@econet.co.zw</a>
+        </div>
+      </div>
+      <div class="ref">
+        <div class="ref-name">Justin Mailos</div>
+        <div class="ref-title">IT Officer<br>Zimbabwe Energy Regulatory Authority</div>
+        <div class="ref-info">
+          <span>+263 71 287 8428</span>
+          <a href="mailto:mailos@zera.co.zw">mailos@zera.co.zw</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="slabel">Contact</div>
+    <div class="contact-box">
+      <p>Open to advisory engagements, speaking opportunities, and interesting cloud and security challenges. Reach out directly or connect on LinkedIn.</p>
+      <div class="c-details">
+        <div class="c-item">📧 <a href="mailto:deluxehove@gmail.com">deluxehove@gmail.com</a></div>
+        <div class="c-item">📞 <a href="tel:+27645183612">+27 64 518 3612</a></div>
+        <div class="c-item">📞 <a href="tel:+263772166116">+263 77 216 6116</a></div>
+        <div class="c-item">📍 Cape Town, South Africa</div>
+      </div>
+      <div class="socials">
+        <a class="soc" href="https://www.linkedin.com/in/deluxehove/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="soc" href="https://www.twitter.com/deluxehv/" target="_blank" rel="noopener">Twitter / X</a>
+        <a class="soc" href="https://www.invenire.co.zw/contacts/" target="_blank" rel="noopener">Invenire</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer style="max-width:1060px;margin:0 auto;padding:0 var(--gut) 3rem;">
+  <p>© Deluxe Hove · Cape Town, South Africa · deluxehove.co.zw</p>
+  <a class="btn ghost" href="#" onclick="window.print();return false;">↓ PDF</a>
+</footer>
+
+<script>
+  // theme toggle
+  const btn = document.getElementById('themeBtn');
+  const root = document.documentElement;
+  const saved = localStorage.getItem('dh-theme') || 'dark';
+  root.setAttribute('data-theme', saved);
+  btn.textContent = saved === 'dark' ? '☀' : '☽';
+  btn.addEventListener('click', () => {
+    const n = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', n);
+    btn.textContent = n === 'dark' ? '☀' : '☽';
+    localStorage.setItem('dh-theme', n);
+  });
+
+  // scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.06 });
+  document.querySelectorAll('section').forEach(s => obs.observe(s));
+</script>
 </body>
 </html>
