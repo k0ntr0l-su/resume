@@ -86,8 +86,9 @@
     .cta-link:hover { color:var(--accent); }
 
     /* ── SECTION ────────── */
-    section { margin-bottom:3rem; opacity:0; transform:translateY(16px); transition:opacity .5s,transform .5s; }
-    section.in { opacity:1; transform:translateY(0); }
+    section { margin-bottom:3rem; opacity:1; transform:translateY(0); transition:opacity .5s,transform .5s; }
+    section.animate { opacity:0; transform:translateY(16px); }
+    section.animate.in { opacity:1; transform:translateY(0); }
     .slabel { font-family:'Space Mono',monospace; font-size:9.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); margin-bottom:1.35rem; display:flex; align-items:center; gap:.7rem; }
     .slabel::after { content:''; flex:1; height:1px; background:var(--border); }
 
@@ -162,6 +163,24 @@
     .hobbies { display:flex; flex-wrap:wrap; gap:.5rem; }
     .hobby { padding:.28rem .75rem; background:var(--bg2); border:1px solid var(--border); border-radius:20px; font-size:12.5px; color:var(--text); }
 
+    /* ── FORM ───────────── */
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; margin-bottom:.75rem; }
+    @media(max-width:540px){ .form-row { grid-template-columns:1fr; } }
+    .form-group { display:flex; flex-direction:column; gap:.35rem; margin-bottom:.75rem; }
+    .form-group:last-of-type { margin-bottom:1rem; }
+    .form-label { font-family:'Space Mono',monospace; font-size:9.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--lo); }
+    .form-input { background:var(--bg3); border:1px solid var(--border); border-radius:4px; padding:.6rem .85rem; font-family:'DM Sans',sans-serif; font-size:13.5px; color:var(--hi); outline:none; transition:border-color .2s; width:100%; }
+    .form-input::placeholder { color:var(--lo); }
+    .form-input:focus { border-color:var(--accent); }
+    .form-textarea { min-height:110px; resize:vertical; }
+    /* ── MODAL ──────────── */
+    .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.7); z-index:200; align-items:center; justify-content:center; padding:1rem; }
+    .modal-overlay.open { display:flex; }
+    .modal { background:var(--bg2); border:1px solid var(--border); border-radius:8px; padding:2rem; width:100%; max-width:480px; position:relative; }
+    .modal-title { font-family:'Space Mono',monospace; font-size:13px; color:var(--hi); font-weight:700; margin-bottom:.35rem; }
+    .modal-sub { font-size:12.5px; color:var(--lo); margin-bottom:1.4rem; }
+    .modal-close { position:absolute; top:1rem; right:1rem; background:transparent; border:1px solid var(--border); color:var(--lo); width:28px; height:28px; border-radius:4px; cursor:pointer; font-size:14px; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+    .modal-close:hover { border-color:var(--accent); color:var(--accent); }
     /* ── FOOTER ─────────── */
     footer { border-top:1px solid var(--border); margin-top:3.5rem; padding-top:1.6rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
     footer p { font-family:'Space Mono',monospace; font-size:9.5px; color:var(--lo); letter-spacing:.06em; }
@@ -202,7 +221,7 @@
   </nav>
   <div class="h-right">
     <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">☀</button>
-    <a class="btn ghost" href="/cdn-cgi/l/email-protection#ee8a8b829b968b8681988bae89838f8782c08d8183">Email</a>
+    <button class="btn ghost" onclick="openModal()">Email</button>
     <a class="btn solid" href="#" onclick="window.print();return false;">↓ PDF</a>
   </div>
 </header>
@@ -221,7 +240,7 @@
     <div class="cta">
       <a class="btn solid" href="#" onclick="window.print();return false;">↓ Download PDF</a>
       <a class="btn ghost" href="https://www.linkedin.com/in/deluxehove/" target="_blank" rel="noopener">LinkedIn ↗</a>
-      <a class="cta-link" href="/cdn-cgi/l/email-protection#4a2e2f263f322f22253c2f0a2d272b232664292527"><span class="__cf_email__" data-cfemail="24404148515c414c4b5241644349454d480a474b49">[email&#160;protected]</span></a>
+      <button class="cta-link" onclick="openModal()">Get in touch →</button>
     </div>
   </div>
 
@@ -542,17 +561,33 @@
   <section id="contact">
     <div class="slabel">Contact</div>
     <div class="contact-box">
-      <p>Open to advisory engagements, speaking opportunities, and interesting cloud and security challenges. Reach out directly or connect on LinkedIn.</p>
-      <div class="c-details">
-        <div class="c-item">📧 <a href="/cdn-cgi/l/email-protection#690d0c051c110c01061f0c290e04080005470a0604"><span class="__cf_email__" data-cfemail="dbbfbeb7aea3beb3b4adbe9bbcb6bab2b7f5b8b4b6">[email&#160;protected]</span></a></div>
-        <div class="c-item">📞 <a href="tel:+27645183612">+27 64 518 3612</a></div>
-        <div class="c-item">📞 <a href="tel:+263772166116">+263 77 216 6116</a></div>
-        <div class="c-item">📍 Cape Town, South Africa</div>
-      </div>
-      <div class="socials">
+      <p>Open to advisory engagements, speaking opportunities, and interesting cloud and security challenges. Fill in the form below and it'll come straight to my inbox.</p>
+      <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Name</label>
+            <input class="form-input" type="text" name="name" placeholder="Your name" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input class="form-input" type="email" name="email" placeholder="your@email.com" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message</label>
+          <textarea class="form-input form-textarea" name="message" placeholder="What's on your mind?" required></textarea>
+        </div>
+        <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+          <button class="btn solid" type="submit" id="submitBtn">Send Message</button>
+          <span id="formStatus" style="font-family:'Space Mono',monospace;font-size:10px;color:var(--accent);display:none;"></span>
+        </div>
+      </form>
+      <div class="socials" style="margin-top:1.4rem;padding-top:1.2rem;border-top:1px solid var(--border);">
         <a class="soc" href="https://www.linkedin.com/in/deluxehove/" target="_blank" rel="noopener">LinkedIn</a>
         <a class="soc" href="https://www.twitter.com/deluxehv/" target="_blank" rel="noopener">Twitter / X</a>
         <a class="soc" href="https://www.invenire.co.zw/contacts/" target="_blank" rel="noopener">Invenire</a>
+        <div class="c-item" style="font-family:'Space Mono',monospace;font-size:10px;color:var(--lo);display:flex;gap:.35rem;">📞 <a href="tel:+27645183612" style="color:var(--accent);text-decoration:none;">+27 64 518 3612</a></div>
+        <div class="c-item" style="font-family:'Space Mono',monospace;font-size:10px;color:var(--lo);display:flex;gap:.35rem;">📍 Cape Town, South Africa</div>
       </div>
     </div>
   </section>
@@ -561,4 +596,136 @@
 
 <footer style="max-width:1060px;margin:0 auto;padding:0 var(--gut) 3rem;">
   <p>© Deluxe Hove · Cape Town, South Africa · deluxehove.co.zw</p>
-  <a class="btn ghost" href="
+  <a class="btn ghost" href="#" onclick="window.print();return false;">↓ PDF</a>
+</footer>
+
+<!-- CONTACT MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-title">Get in touch</div>
+    <div class="modal-sub">I'll get back to you as soon as I can.</div>
+    <form id="modalForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" onsubmit="handleModalSubmit(event)">
+      <div class="form-group">
+        <label class="form-label">Name</label>
+        <input class="form-input" type="text" name="name" placeholder="Your name" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" name="email" placeholder="your@email.com" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Message</label>
+        <textarea class="form-input form-textarea" name="message" placeholder="What's on your mind?" required></textarea>
+      </div>
+      <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+        <button class="btn solid" type="submit" id="modalSubmitBtn">Send Message</button>
+        <span id="modalStatus" style="font-family:'Space Mono',monospace;font-size:10px;color:var(--accent);display:none;"></span>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  // theme
+  const btn = document.getElementById('themeBtn');
+  const root = document.documentElement;
+  const saved = localStorage.getItem('dh-theme') || 'dark';
+  root.setAttribute('data-theme', saved);
+  btn.textContent = saved === 'dark' ? '☀' : '☽';
+  btn.addEventListener('click', () => {
+    const n = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', n);
+    btn.textContent = n === 'dark' ? '☀' : '☽';
+    localStorage.setItem('dh-theme', n);
+  });
+
+  // scroll reveal
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: 0.06 });
+    document.querySelectorAll('section').forEach(s => {
+      s.classList.add('animate');
+      obs.observe(s);
+    });
+  }
+
+  // modal
+  function openModal() {
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  // modal form submit via Formspree
+  async function handleModalSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    const submitBtn = document.getElementById('modalSubmitBtn');
+    const status = document.getElementById('modalStatus');
+    submitBtn.textContent = 'Sending…';
+    submitBtn.disabled = true;
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        status.textContent = '✓ Message sent!';
+        status.style.display = 'inline';
+        form.reset();
+        setTimeout(closeModal, 2000);
+      } else {
+        status.textContent = '✕ Something went wrong — try LinkedIn.';
+        status.style.color = '#e05';
+        status.style.display = 'inline';
+      }
+    } catch {
+      status.textContent = '✕ Network error — try LinkedIn.';
+      status.style.color = '#e05';
+      status.style.display = 'inline';
+    }
+    submitBtn.textContent = 'Send Message';
+    submitBtn.disabled = false;
+  }
+
+  // contact section form submit
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    const submitBtn = document.getElementById('submitBtn');
+    const status = document.getElementById('formStatus');
+    submitBtn.textContent = 'Sending…';
+    submitBtn.disabled = true;
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        status.textContent = '✓ Message sent!';
+        status.style.display = 'inline';
+        form.reset();
+      } else {
+        status.textContent = '✕ Something went wrong — try LinkedIn.';
+        status.style.color = '#e05';
+        status.style.display = 'inline';
+      }
+    } catch {
+      status.textContent = '✕ Network error — try LinkedIn.';
+      status.style.color = '#e05';
+      status.style.display = 'inline';
+    }
+    submitBtn.textContent = 'Send Message';
+    submitBtn.disabled = false;
+  }
+</script>
+</body>
+</html>
