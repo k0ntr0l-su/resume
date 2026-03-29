@@ -202,7 +202,7 @@
   </nav>
   <div class="h-right">
     <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">☀</button>
-    <a class="btn ghost" href="mailto:deluxehove@gmail.com">Email</a>
+    <a class="btn ghost" href="/cdn-cgi/l/email-protection#ee8a8b829b968b8681988bae89838f8782c08d8183">Email</a>
     <a class="btn solid" href="#" onclick="window.print();return false;">↓ PDF</a>
   </div>
 </header>
@@ -221,7 +221,7 @@
     <div class="cta">
       <a class="btn solid" href="#" onclick="window.print();return false;">↓ Download PDF</a>
       <a class="btn ghost" href="https://www.linkedin.com/in/deluxehove/" target="_blank" rel="noopener">LinkedIn ↗</a>
-      <a class="cta-link" href="mailto:deluxehove@gmail.com">deluxehove@gmail.com</a>
+      <a class="cta-link" href="/cdn-cgi/l/email-protection#4a2e2f263f322f22253c2f0a2d272b232664292527"><span class="__cf_email__" data-cfemail="24404148515c414c4b5241644349454d480a474b49">[email&#160;protected]</span></a>
     </div>
   </div>
 
@@ -532,39 +532,9 @@
   <!-- REFEREES -->
   <section id="referees">
     <div class="slabel">Referees</div>
-    <div class="ref-grid">
-      <div class="ref">
-        <div class="ref-name">Alfred Nyamhunga</div>
-        <div class="ref-title">Managing Consultant<br>Headway Business Consulting</div>
-        <div class="ref-info">
-          <span>+263 77 295 1467</span>
-          <a href="mailto:alfnyamhunga@gmail.com">alfnyamhunga@gmail.com</a>
-        </div>
-      </div>
-      <div class="ref">
-        <div class="ref-name">Elton Chirinyu</div>
-        <div class="ref-title">IT Infrastructure &amp; Operations Manager<br>MBCA Bank</div>
-        <div class="ref-info">
-          <span>+263 77 236 6508</span>
-          <a href="mailto:eltonc@mbca.co.zw">eltonc@mbca.co.zw</a>
-        </div>
-      </div>
-      <div class="ref">
-        <div class="ref-name">Farai Mutyasera</div>
-        <div class="ref-title">General Manager — Enterprise Business<br>Econet Wireless Zimbabwe</div>
-        <div class="ref-info">
-          <span>+263 77 222 2332</span>
-          <a href="mailto:farai.mutyasera@econet.co.zw">farai.mutyasera@econet.co.zw</a>
-        </div>
-      </div>
-      <div class="ref">
-        <div class="ref-name">Justin Mailos</div>
-        <div class="ref-title">IT Officer<br>Zimbabwe Energy Regulatory Authority</div>
-        <div class="ref-info">
-          <span>+263 71 287 8428</span>
-          <a href="mailto:mailos@zera.co.zw">mailos@zera.co.zw</a>
-        </div>
-      </div>
+    <div class="contact-box" style="display:flex;align-items:center;gap:1rem;">
+      <span style="font-size:1.3rem;">📋</span>
+      <p style="margin:0;font-size:14px;color:var(--text);">Available upon request.</p>
     </div>
   </section>
 
@@ -574,7 +544,7 @@
     <div class="contact-box">
       <p>Open to advisory engagements, speaking opportunities, and interesting cloud and security challenges. Reach out directly or connect on LinkedIn.</p>
       <div class="c-details">
-        <div class="c-item">📧 <a href="mailto:deluxehove@gmail.com">deluxehove@gmail.com</a></div>
+        <div class="c-item">📧 <a href="/cdn-cgi/l/email-protection#690d0c051c110c01061f0c290e04080005470a0604"><span class="__cf_email__" data-cfemail="dbbfbeb7aea3beb3b4adbe9bbcb6bab2b7f5b8b4b6">[email&#160;protected]</span></a></div>
         <div class="c-item">📞 <a href="tel:+27645183612">+27 64 518 3612</a></div>
         <div class="c-item">📞 <a href="tel:+263772166116">+263 77 216 6116</a></div>
         <div class="c-item">📍 Cape Town, South Africa</div>
@@ -591,28 +561,4 @@
 
 <footer style="max-width:1060px;margin:0 auto;padding:0 var(--gut) 3rem;">
   <p>© Deluxe Hove · Cape Town, South Africa · deluxehove.co.zw</p>
-  <a class="btn ghost" href="#" onclick="window.print();return false;">↓ PDF</a>
-</footer>
-
-<script>
-  // theme toggle
-  const btn = document.getElementById('themeBtn');
-  const root = document.documentElement;
-  const saved = localStorage.getItem('dh-theme') || 'dark';
-  root.setAttribute('data-theme', saved);
-  btn.textContent = saved === 'dark' ? '☀' : '☽';
-  btn.addEventListener('click', () => {
-    const n = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', n);
-    btn.textContent = n === 'dark' ? '☀' : '☽';
-    localStorage.setItem('dh-theme', n);
-  });
-
-  // scroll reveal
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
-  }, { threshold: 0.06 });
-  document.querySelectorAll('section').forEach(s => obs.observe(s));
-</script>
-</body>
-</html>
+  <a class="btn ghost" href="
